@@ -1,6 +1,6 @@
 # Simitate: A Hybrid Imitation Learning Benchmark
 
-![images/overview.png]
+![Simitate Overview](images/simitate_overview.png)
 
 * A preprint can be found on [arxiv](https://arxiv.org/abs/1905.06002).
 * A short overview video is available on [youtube](https://www.youtube.com/watch?v=EHRgX0_G-j4)
