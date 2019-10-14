@@ -1,9 +1,3 @@
----
-title: Simitate
-subtitle: A Hybrid Imitation Learning Benchmark
-documentclass: scrartcl
----
-
 # Simitate: A Hybrid Imitation Learning Benchmark
 
 ![Simitate Overview](images/simitate_overview.png)
@@ -21,7 +15,7 @@ documentclass: scrartcl
 
 [![Watch the video](https://img.youtube.com/vi/EHRgX0_G-j4/maxresdefault.jpg)](https://www.youtube.com/watch?v=EHRgX0_G-j4)
 
-In case the video does not play you can download it [here](video/simitate.mp4)
+In case the video does not play you can download it [here](https://agas.uni-koblenz.de/simitate/web/video/simitate.mp4)
 
 # Dataset
 
@@ -45,10 +39,10 @@ wget -m --no-parent --reject index.html* https://agas.uni-koblenz.de/data/simita
 
 A tabular scene overview to download individual sequences can be found here:
 
-* [Basic Motions](table_basic_motions.html)
-* [Motions](table_motions.html)
-* [Sequential](table_sequential.html)
-* [Complex](table_complex.html)
+* [Basic Motions](https://agas.uni-koblenz.de/simitate/web/table_basic_motions.html)
+* [Motions](https://agas.uni-koblenz.de/simitate/web/table_motions.html)
+* [Sequential](https://agas.uni-koblenz.de/simitate/web/table_sequential.html)
+* [Complex](https://agas.uni-koblenz.de/simitate/web/table_complex.html)
 
 
 
@@ -61,7 +55,7 @@ A tabular scene overview to download individual sequences can be found here:
 <!--* Bag files containing Ground Truth, RGB and Depth streams-->
 <!--* Pre-trained models for YOLO and MaskRCNN-->
 
-# Benchmark
+## Benchmark
 
 For benchmarking you need to execute the following steps:
 
@@ -245,18 +239,6 @@ Example:
 
 ## Additional
 
-
-### Citation
-
-```
-@article{memmesheimer2019simitate,
-  title={Simitate: A Hybrid Imitation Learning Benchmark},
-  author={Memmesheimer, Raphael and Mykhalchyshyna, Ivanna and Seib, Viktor and Paulus, Dietrich},
-  journal={arXiv preprint arXiv:1905.06002},
-  year={2019}
-}
-```
-
 ### Camera Calibration
 
 We provide the intrinsic and extrinsic calibration files used during the recording of 
@@ -307,3 +289,14 @@ The following objects from IKEA have been used for Simitate:
 | GUBBRÖRA     |  902.257.31   |  Rubber spatula
 
 Table:  Object list for Simitate
+
+### Citation
+
+```
+@article{memmesheimer2019simitate,
+  title={Simitate: A Hybrid Imitation Learning Benchmark},
+  author={Memmesheimer, Raphael and Mykhalchyshyna, Ivanna and Seib, Viktor and Paulus, Dietrich},
+  journal={arXiv preprint arXiv:1905.06002},
+  year={2019}
+}
+```
