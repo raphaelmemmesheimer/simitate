@@ -139,14 +139,13 @@ optional arguments:
 
 The result using the TIAGo robot and the ground-truth should be like this:
 
-![TIAGo](images/tiago.png)
+![TIAGo](https://agas.uni-koblenz.de/data/simitate/web/images/tiago.png)
 
 And the estimated trajectory using the presented baseline approach:
 
-![TIAGo](images/tiago_openpose.png)
+![TIAGo](https://agas.uni-koblenz.de/data/simitate/web/images/tiago_openpose.png)
 
 ## Gazebo
-
 
 ### Perquisites 
 
@@ -259,11 +258,11 @@ R: [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
 P: [536.005076997568, 0.0, 478.48108901107867, 0.0, 0.0, 537.8178473127615, 254.99770751448608, 0.0, 0.0, 0.0, 1.0, 0.0]
 ```
 
-Extrinsic calibration files are provided [here](data/simitate/camera_calibration.tar.bz2)
+Extrinsic calibration files are provided [here](https://agas.uni-koblenz.de/data/simitate/data/simitate/camera_calibration.tar.bz2)
 
 ### Objects
 
-![Simitate Objects](images/objects.jpg "Objects used in the benchmark")
+![Simitate Objects](https://agas.uni-koblenz.de/data/simitate/web/images/objects.jpg "Objects used in the benchmark")
 
 For reproduction purposes we provide a list of objects used in the experiments.
 The following objects from IKEA have been used for Simitate:
