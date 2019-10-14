@@ -65,7 +65,8 @@ For trajectory quality:
 * We provide a `trajectory_loader` class that supports you on collecting your estimates for later evaluation
 * Imitate the visually observed behaviour 
 
-```
+```python
+
 import trajectory_loader
 
 tl = trajectory_loader.SimitateTrajectoryLoader()
