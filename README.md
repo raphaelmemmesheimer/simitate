@@ -19,7 +19,7 @@ documentclass: scrartcl
 <source src="video/simitate.mp4">
 </video>
 
-[![Watch the video](https://img.youtube.com/vi/EHRgX0_G-j4/hqdefault.jpg)](https://www.youtube.com/watch?v=EHRgX0_G-j4)
+[![Watch the video](https://img.youtube.com/vi/EHRgX0_G-j4/maxresdefault.jpg)](https://www.youtube.com/watch?v=EHRgX0_G-j4)
 
 In case the video does not play you can download it [here](video/simitate.mp4)
 
