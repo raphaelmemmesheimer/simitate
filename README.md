@@ -31,7 +31,7 @@ To batch download the files you can use the following command:
 This will download e.g. all basic motions sequences:
 
 ```
-wget -m --no-parent --reject index.html* https://agas.uni-koblenz.de/data/simitate/data/simitate/new_extracted/basic_motions
+wget -m --no-parent --reject index.html* https://agas.uni-koblenz.de/data/simitate/data/simitate/extracted/basic_motions
 
 ```
 
