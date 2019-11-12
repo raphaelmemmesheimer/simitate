@@ -15,6 +15,7 @@ import pickle
 import numpy as np
 from tf import transformations
 import csv
+import cv2
 #import io
 
 
@@ -222,6 +223,41 @@ class SimitateTrajectoryLoader(object):
     def load_trajectories_from_file(self, filename):
         with open(filename, 'rb') as f:  # Python 3: open(..., 'rb')
             self.trajectories = pickle.load(f)
+            
+    def project_mocap_to_image(self):
+        # TODO document
+        objects_in_pixel_coord = {}
+        for frame, trajectory in self.trajectories.items():
+            obj_in_pixel = []
+            for i in range(len(trajectory)):
+                if str(type(trajectory[i])) != "<type 'numpy.ndarray'>" :
+                    print "Warning: trajectory data too short for " + str(frame) + " " + str(i)
+                    continue
+                position_in_world_coord = trajectory[i,1:4]
+                #print "pos in world"
+                #print position_in_world_coord
+                current_point = self.transform_to_kinect(position_in_world_coord)[0:3]
+                position_in_cam_coord = np.asarray([np.asarray(current_point).astype('float32')]).astype("float32")
+                #print "pos in cam"
+                #print position_in_cam_coord
+                
+                computed_rvec = np.asarray([0,0,0]).astype("float32")
+                computed_tvec = np.asarray([0,0,0]).astype("float32")
+                dist_coeff = np.asarray([0.08358987550663602, -0.14957906731226864, -0.003103469710389675, -0.00031033751957969485, 0.06981523248780676]).astype("float32")
+                K= np.asarray([[536.005076997568, 0.0, 478.48108901107867], [0.0, 537.8178473127615, 254.99770751448608], [0.0, 0.0, 1.0]] ).astype("float32")
+                #R= np.asarray([[1.0, 0.0, 0.0],[ 0.0, 1.0, 0.0],[ 0.0, 0.0, 1.0]] )
+                #P= np.asarray([[536.005076997568, 0.0, 478.48108901107867, 0.0],[ 0.0, 537.8178473127615, 254.99770751448608, 0.0],[ 0.0, 0.0, 1.0, 0.0]] )
+                camera_matrix = K
+                #print "camera_matrix"
+                #print camera_matrix
+                
+                cam_pixels = cv2.projectPoints(position_in_cam_coord, computed_rvec, computed_tvec, camera_matrix, dist_coeff)[0][0][0]
+                #print "projectPoints result:"
+                #print cam_pixels
+                obj_in_pixel.append([trajectory[i,0], int(round(cam_pixels[0])), int(round(cam_pixels[1]))]) # [time, pixel, pixel]
+            objects_in_pixel_coord[frame] = obj_in_pixel
+        return objects_in_pixel_coord
+
 
     def animate_trajectories(self, frame):
         from matplotlib.animation import FuncAnimation
