@@ -117,7 +117,10 @@ Tests were executed in Ubuntu 16.04 and Ubuntu 18.04.
 
 then run using to show the ground truth e.g. with the Sawyer robot:
 
-`python2.7 simitate_bullet.py -r 1 -gt examples/zickzack_2018-08-23-18-04-27.csv`
+```
+python2 simitate_bullet.py -config ../configs/config_tiago.yaml ../examples/circle_2018-08-23-17-55-04.csv
+
+```
 
 This command should run the simulation of a zickzack trajectory.
 
