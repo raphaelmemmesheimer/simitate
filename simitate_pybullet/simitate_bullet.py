@@ -10,8 +10,24 @@ import yaml
 import pybullet as p
 # import cv2
 import trajectory_loader
+import zipfile
+
+import requests
 
 
+def download_and_unzip_data_file(url="https://agas.uni-koblenz.de/simitate/data/simitate/data/simitate_pybullet_data.zip"):
+    print('Beginning file download with simitate data files...')
+    dest_filename = "simitate_pybullet_data.zip"
+    # wget.download(url, dest_filename)
+    r = requests.get(url)
+    with open(dest_filename, 'wb') as f:
+        f.write(r.content)
+    with zipfile.ZipFile(dest_filename, 'r') as zip_ref:
+        zip_ref.extractall(".")
+
+
+if not os.path.exists("data"):
+    download_and_unzip_data_file()
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-gt', action='store_true', help="use ground truth")
