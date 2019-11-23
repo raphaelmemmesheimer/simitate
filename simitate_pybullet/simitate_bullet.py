@@ -31,7 +31,6 @@ if not os.path.exists("data"):
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-gt', action='store_true', help="use ground truth")
-parser.add_argument('-r', default=0, help="choose robot. R=0 is tiago, R=1 is sawyer")
 parser.add_argument('-config', default="config_tiago.yaml", help="Config file")
 parser.add_argument('csvfile')
 args = parser.parse_args()
@@ -44,7 +43,7 @@ if len(args.csvfile) <= 1:
     sys.exit()
 
 ## Read config
-with open(args.config, "r") as config_file: 
+with open(args.config, "r") as config_file:
     try: 
         config = yaml.safe_load(config_file)
     except yaml.YAMLError as error: 
