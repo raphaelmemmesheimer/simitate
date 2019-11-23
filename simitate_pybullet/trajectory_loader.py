@@ -231,7 +231,7 @@ class SimitateTrajectoryLoader(object):
             obj_in_pixel = []
             for i in range(len(trajectory)):
                 if str(type(trajectory[i])) != "<type 'numpy.ndarray'>" :
-                    print "Warning: trajectory data too short for " + str(frame) + " " + str(i)
+                    print("Warning: trajectory data too short for " + str(frame) + " " + str(i))
                     continue
                 position_in_world_coord = trajectory[i,1:4]
                 #print "pos in world"
