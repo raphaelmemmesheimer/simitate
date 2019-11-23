@@ -35,7 +35,6 @@ parser.add_argument('-config', default="config_tiago.yaml", help="Config file")
 parser.add_argument('csvfile')
 args = parser.parse_args()
 print ("gt is " + str(args.gt))
-print ("r is " + str(args.r))
 print ("csvfile is " + str(args.csvfile))
 
 if len(args.csvfile) <= 1:
