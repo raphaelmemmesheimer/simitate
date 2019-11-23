@@ -108,36 +108,37 @@ Simitate is available as a ROS package here:
 
 <!--We focus on support for PyBullet in favor over Mujoco, because of it's free -->
 <!--availability.-->
-PyBullet is mainly supported by Simitate. The Simitate Environment for PyBullet 
-can be found here: [PyBullet Env](https://agas.uni-koblenz.de/data/simitate/data/simitate/code/pybullet-env.tar.bz2).
+PyBullet is mainly supported by Simitate. 
+<!--The Simitate Environment for PyBullet -->
+<!--can be found here: [PyBullet Env](https://agas.uni-koblenz.de/data/simitate/data/simitate/code/pybullet-env.tar.bz2).-->
 Tests were executed in Ubuntu 16.04 and Ubuntu 18.04.
 
-* Python 2
+* Python 2 / Python 3
 * `pip install PyBullet`
 
 then run using to show the ground truth e.g. with the Sawyer robot:
 
 ```
-python2 simitate_bullet.py -config ../configs/config_tiago.yaml ../examples/circle_2018-08-23-17-55-04.csv
+python simitate_pybullet/simitate_bullet.py -config=configs/config_sawyer.yaml  examples/heart_2018-08-23-18-02-06.csv
 
 ```
 
-This command should run the simulation of a zickzack trajectory.
+This command should run the simulation of a heart trajectory.
 
 The script looks for estimated trajectories for evaluation, in case none are found 
 the simulated robot executes the ground-truth trajectory.
 
 Further Information:
 ```
-usage: simitate_bullet.py [-h] [-gt] [-r R] csvfile
+usage: simitate_bullet.py [-h] [-gt] [-config CONFIG] csvfile
 
 positional arguments:
   csvfile
 
 optional arguments:
-  -h, --help  show this help message and exit
-  -gt         use ground truth
-  -r R        choose robot. R=0 is tiago, R=1 is sawye
+  -h, --help      show this help message and exit
+  -gt             use ground truth
+  -config CONFIG  Config file
 ```
 
 The result using the TIAGo robot and the ground-truth should be like this:
