@@ -65,7 +65,7 @@ class SimitateTrajectoryLoader(object):
                 if black_frame in important_element:
                     break
             else:
-                print ("    found frame " + str(important_element))
+                #print ("    found frame " + str(important_element))
                 frames.append(str(important_element))
         input_file.close()
         return frames
