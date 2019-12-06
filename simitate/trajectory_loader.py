@@ -126,7 +126,7 @@ class SimitateTrajectoryLoader(object):
         self.filename = filename
         if frames is None:
             frames = self.get_frames(filename)
-            print("Found the following frames: ", frames)
+            #print("Found the following frames: ", frames)
         data = self.trajectories
         for current_frame in frames:
             #stream = io.open(filename,'rb') didnot work
