@@ -1,4 +1,4 @@
-"""
+""
 SimitateTrajectoryLoader
 Usage like:
 
@@ -13,7 +13,7 @@ Usage like:
 
 import pickle
 import numpy as np
-from tf import transformations
+from . import transformations
 import csv
 import cv2
 #import io
@@ -172,7 +172,7 @@ class SimitateTrajectoryLoader(object):
             self.trajectories[frame] = np.append(self.trajectories[frame], [[stamp, point[0], point[1], point[2]]], axis=0)
         # self.trajectories[frame][stamp] = point
 
-    def plot_trajectories(self):
+    def plot_trajectories(self, usetex=False):
         """This method will plot all trajectories loaded and show the plot
         on screen for saving the plot use the method `plot_trajectories_to_file`
         """
@@ -184,7 +184,7 @@ class SimitateTrajectoryLoader(object):
 
         fig = plt.figure()
 
-        plt.rc('text', usetex=True)
+        plt.rc('text', usetex=usetex)
         plt.rc('font', family='serif')
         ax = fig.add_subplot("111", projection='3d')
         for frame in self.trajectories:
