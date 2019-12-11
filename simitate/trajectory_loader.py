@@ -10,14 +10,20 @@ Usage like:
     a.plot_trajectories_to_file("test.pdf")
 
 """
-
 import pickle
 import numpy as np
-from . import transformations
+# python 2.7
+#from tf import transformations
+#python 3
+import transformations
 import csv
-import cv2
+import warnings
 #import io
 
+
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import axes3d
+from matplotlib import cm
 
 
 def filter_lines(f, target_frame):
@@ -42,6 +48,17 @@ def matrix_from_row(row):
     mat_t = transformations.translation_matrix(translation)
     mat_q = transformations.quaternion_matrix(quaternion)
     return mat_t.dot(mat_q)
+
+
+def plot_trajectory(subplot, label, trajectory_data, char=None):
+    # if frame == "baseline_trajectory":
+        # subplot.plot(trajectory_data[:, 1],
+                     # trajectory_data[:, 2],
+                     # trajectory_data[:, 3], "ro", label=label)
+    # else:
+        subplot.plot(trajectory_data[:, 1],
+                     trajectory_data[:, 2],
+                     trajectory_data[:, 3], label=label)
 
 
 
@@ -92,14 +109,14 @@ class SimitateTrajectoryLoader(object):
                 if (not exists_mat_link_2_rgb) and (row[3] == "kinect2_link" and row[4] == "kinect2_rgb_optical_frame"):
                     exists_mat_link_2_rgb = True
                     mat_link_2_rgb = matrix_from_row(row)
-                if (not exists_mat_optical) and (row[3] == "kinect2_rgb_optical_frame" and row[4] == "kinect2_ir_optical_frame"):
+                if (not exists_mat_link_2_rgb) and (row[3] == "kinect2_rgb_optical_frame" and row[4] == "kinect2_ir_optical_frame"):
                     exists_mat_optical  = True
                     mat_optical = matrix_from_row(row)
                 if exist_mat_w_2_mocap and exists_mat_mocap_2_link and exists_mat_link_2_rgb and exists_mat_optical:
                     break
             else:
-                print ("Warning! No transformation in world found")
-        # print mat_w_2_mocap, mat_mocap_2_link, mat_link_2_rgb
+                warnings.warn("Warning! No transformation in world found")
+        #print(mat_w_2_mocap, mat_mocap_2_link, mat_link_2_rgb)
         # return mat_mocap_2_link.dot(transformations.inverse_matrix(mat_link_2_rgb.dot(mat_w_2_mocap)))
         return mat_w_2_mocap.dot(mat_mocap_2_link.dot(mat_link_2_rgb.dot(mat_optical)))
         # return transformations.inverse_matrix(mat_w_2_mocap.dot(mat_mocap_2_link.dot(mat_link_2_rgb)))
@@ -110,7 +127,7 @@ class SimitateTrajectoryLoader(object):
                                                    point[2],
                                                    1])
 
-    def load_trajectories(self, filename, frames=None, with_orientation=False):
+    def load_trajectories(self, filename, frames=None, with_orientation=False, clear=True):
 
         """ this method loads dumped tf data from a csv file
         this file can be created by the following command:
@@ -123,10 +140,12 @@ class SimitateTrajectoryLoader(object):
         :returns: None
 
         """
+        if clear:
+            self.trajectories = {}
         self.filename = filename
         if frames is None:
             frames = self.get_frames(filename)
-            #print("Found the following frames: ", frames)
+            print("Found the following frames: ", frames)
         data = self.trajectories
         for current_frame in frames:
             #stream = io.open(filename,'rb') didnot work
@@ -172,36 +191,37 @@ class SimitateTrajectoryLoader(object):
             self.trajectories[frame] = np.append(self.trajectories[frame], [[stamp, point[0], point[1], point[2]]], axis=0)
         # self.trajectories[frame][stamp] = point
 
-    def plot_trajectories(self, usetex=False):
+
+    def plot_trajectories(self, show=True):
         """This method will plot all trajectories loaded and show the plot
         on screen for saving the plot use the method `plot_trajectories_to_file`
         """
         # plt.title()
         # ax = fig.add_subplot()
-        import matplotlib.pyplot as plt
-        from mpl_toolkits.mplot3d import axes3d
-        from matplotlib import cm
 
         fig = plt.figure()
 
-        plt.rc('text', usetex=usetex)
+        plt.rc('text', usetex=True)
         plt.rc('font', family='serif')
         ax = fig.add_subplot("111", projection='3d')
         for frame in self.trajectories:
-            # data = np.array(list(self.trajectories[frame].values()))
-            data = self.trajectories[frame]
-            # ax.plot(data[:1000, 0], data[:1000, 1], data[:1000, 2], label=frame)
             frame = frame.replace("_", "-")
-            if frame == "baseline_trajectory":
-                ax.plot(data[:, 1], data[:, 2], data[:, 3], "ro", label=frame)
-            else:
-                ax.plot(data[:, 1], data[:, 2], data[:, 3], label=frame)
+            plot_trajectory(subplot=ax, label=frame, trajectory_data=self.trajectories[frame])
+            # data = np.array(list(self.trajectories[frame].values()))
+            # data = self.trajectories[frame]
+            # # ax.plot(data[:1000, 0], data[:1000, 1], data[:1000, 2], label=frame)
+            # frame = frame.replace("_", "-")
+            # if frame == "baseline_trajectory":
+                # ax.plot(data[:, 1], data[:, 2], data[:, 3], "ro", label=frame)
+            # else:
+                # ax.plot(data[:, 1], data[:, 2], data[:, 3], label=frame)
             #ax.plot(data[:, 0], data[:, 1], np.zero(len(data)), label=frame)
             # 2d
             #plt.plot(data[:, 0], data[:, 2], 'ro')
         ax.legend()
         #plt.axis([-1, 1, -1, 1])
-        plt.show()
+        if show:
+            plt.show()
         return fig
         #dest_filename = os.path.splitext(os.path.basename(sys.argv[1]))[0]+".pdf"
         #plt.savefig(dest_filename, bbox_inches='tight')
@@ -223,41 +243,6 @@ class SimitateTrajectoryLoader(object):
     def load_trajectories_from_file(self, filename):
         with open(filename, 'rb') as f:  # Python 3: open(..., 'rb')
             self.trajectories = pickle.load(f)
-            
-    def project_mocap_to_image(self):
-        # TODO document
-        objects_in_pixel_coord = {}
-        for frame, trajectory in self.trajectories.items():
-            obj_in_pixel = []
-            for i in range(len(trajectory)):
-                if str(type(trajectory[i])) != "<type 'numpy.ndarray'>" :
-                    print("Warning: trajectory data too short for " + str(frame) + " " + str(i))
-                    continue
-                position_in_world_coord = trajectory[i,1:4]
-                #print "pos in world"
-                #print position_in_world_coord
-                current_point = self.transform_to_kinect(position_in_world_coord)[0:3]
-                position_in_cam_coord = np.asarray([np.asarray(current_point).astype('float32')]).astype("float32")
-                #print "pos in cam"
-                #print position_in_cam_coord
-                
-                computed_rvec = np.asarray([0,0,0]).astype("float32")
-                computed_tvec = np.asarray([0,0,0]).astype("float32")
-                dist_coeff = np.asarray([0.08358987550663602, -0.14957906731226864, -0.003103469710389675, -0.00031033751957969485, 0.06981523248780676]).astype("float32")
-                K= np.asarray([[536.005076997568, 0.0, 478.48108901107867], [0.0, 537.8178473127615, 254.99770751448608], [0.0, 0.0, 1.0]] ).astype("float32")
-                #R= np.asarray([[1.0, 0.0, 0.0],[ 0.0, 1.0, 0.0],[ 0.0, 0.0, 1.0]] )
-                #P= np.asarray([[536.005076997568, 0.0, 478.48108901107867, 0.0],[ 0.0, 537.8178473127615, 254.99770751448608, 0.0],[ 0.0, 0.0, 1.0, 0.0]] )
-                camera_matrix = K
-                #print "camera_matrix"
-                #print camera_matrix
-                
-                cam_pixels = cv2.projectPoints(position_in_cam_coord, computed_rvec, computed_tvec, camera_matrix, dist_coeff)[0][0][0]
-                #print "projectPoints result:"
-                #print cam_pixels
-                obj_in_pixel.append([trajectory[i,0], int(round(cam_pixels[0])), int(round(cam_pixels[1]))]) # [time, pixel, pixel]
-            objects_in_pixel_coord[frame] = obj_in_pixel
-        return objects_in_pixel_coord
-
 
     def animate_trajectories(self, frame):
         from matplotlib.animation import FuncAnimation
