@@ -17,6 +17,21 @@
 
 In case the video does not play you can download it [here](https://agas.uni-koblenz.de/simitate/web/video/simitate.mp4)
 
+
+### Citation
+
+```
+@inproceedings{memmesheimer2019simitate,
+  title={Simitate: A Hybrid Imitation Learning Benchmark},
+  author={Memmesheimer, Raphael and Kramer, Ivanna and Seib, Viktor and Paulus, Dietrich},
+  booktitle={2019 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)},
+  pages={5243--5249},
+  year={2019},
+  organization={IEEE}
+}
+```
+
+
 # Dataset
 
 The root of the data folder can be found here: [All Files](https://agas.uni-koblenz.de/data/simitate/data/simitate/)
@@ -293,14 +308,3 @@ The following objects from IKEA have been used for Simitate:
 | GUBBRÖRA     |  902.257.31   |  Rubber spatula
 
 Table:  Object list for Simitate
-
-### Citation
-
-```
-@article{memmesheimer2019simitate,
-  title={Simitate: A Hybrid Imitation Learning Benchmark},
-  author={Memmesheimer, Raphael and Mykhalchyshyna, Ivanna and Seib, Viktor and Paulus, Dietrich},
-  journal={arXiv preprint arXiv:1905.06002},
-  year={2019}
-}
-```
