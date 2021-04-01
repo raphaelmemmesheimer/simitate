@@ -15,7 +15,8 @@ import numpy as np
 # python 2.7
 #from tf import transformations
 #python 3
-from . import transformations
+#from . import transformations
+import transformations
 import csv
 import warnings
 #import io
@@ -237,12 +238,13 @@ class SimitateTrajectoryLoader(object):
         fig.savefig(dest_filename, bbox_inches='tight')
 
     def save_trajectory_to_file(self, filename):
-        with open(filename, 'w') as f:  # Python 3: open(..., 'wb')
+        with open(filename, 'wb') as f:  # Python 3: open(..., 'wb')
             pickle.dump(self.trajectories, f)
 
     def load_trajectories_from_file(self, filename):
+        print(filename)
         with open(filename, 'rb') as f:  # Python 3: open(..., 'rb')
-            self.trajectories = pickle.load(f)
+            self.trajectories = pickle.load(f, encoding='latin1')
 
     def animate_trajectories(self, frame):
         from matplotlib.animation import FuncAnimation
