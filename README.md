@@ -126,17 +126,21 @@ Simitate is available as a ROS package here:
 PyBullet is mainly supported by Simitate. 
 <!--The Simitate Environment for PyBullet -->
 <!--can be found here: [PyBullet Env](https://agas.uni-koblenz.de/data/simitate/data/simitate/code/pybullet-env.tar.bz2).-->
-Tests were executed in Ubuntu 16.04 and Ubuntu 18.04.
+Tests were executed in Ubuntu 16.04 and Ubuntu 18.04 in a clean conda environment.
 
 * Python 2 / Python 3
-* `pip install PyBullet`
+* `conda create -n simitate python=3.8`
+* `conda activate simitate`
+* `pip install -r requirements.txt`
 
 then run using to show the ground truth e.g. with the Sawyer robot:
 
 ```
-python simitate_pybullet/simitate_bullet.py -config=configs/config_sawyer.yaml  examples/heart_2018-08-23-18-02-06.csv
+python simitate/simitate_bullet.py -gt -config=configs/config_sawyer.yaml  examples/heart_2018-08-23-18-02-06.csv 
 
 ```
+
+
 
 This command should run the simulation of a heart trajectory.
 
