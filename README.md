@@ -47,7 +47,6 @@ This will download e.g. all basic motions sequences:
 
 ```
 wget -m --no-parent --reject index.html* https://agas.uni-koblenz.de/data/simitate/data/simitate/extracted/basic_motions
-
 ```
 
 ## Overview
@@ -137,7 +136,6 @@ then run using to show the ground truth e.g. with the Sawyer robot:
 
 ```
 python simitate/simitate_bullet.py -gt -config=configs/config_sawyer.yaml  examples/heart_2018-08-23-18-02-06.csv 
-
 ```
 
 
